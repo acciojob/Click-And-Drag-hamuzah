@@ -36,7 +36,7 @@
 
 <script>
 //Your code goes here 
-  const slider = document.querySelector('.items');
+   const slider = document.querySelector('.items');
   let isDown = false;
   let startX;
   let scrollLeft;
@@ -59,10 +59,10 @@
   });
 
   slider.addEventListener('mousemove', (e) => {
-    if (!isDown) return;  // stop the fn from running
+    if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 3;
+    const walk = (x - startX) * 2; // The 2 is to increase scroll speed
     slider.scrollLeft = scrollLeft - walk;
   });
 
