@@ -36,10 +36,35 @@
 
 <script>
 //Your code goes here 
-   let items = document.querySelectorAll(".item");
-	for(let i = 0; i < items.length; i++){
-		items[i].draggable = true;
-	}
+const cubes = document.querySelectorAll('.cube');
+    let selectedCube = null;
+    let offsetX, offsetY;
+
+    cubes.forEach(cube => {
+      cube.addEventListener('mousedown', onMouseDown);
+      cube.addEventListener('mousemove', onMouseMove);
+      cube.addEventListener('mouseup', onMouseUp);
+    });
+
+    function onMouseDown(event) {
+      selectedCube = event.target;
+      offsetX = event.clientX - selectedCube.offsetLeft;
+      offsetY = event.clientY - selectedCube.offsetTop;
+    }
+
+    function onMouseMove(event) {
+      if (selectedCube) {
+        const x = event.clientX - offsetX;
+        const y = event.clientY - offsetY;
+        selectedCube.style.left = `${x}px`;
+        selectedCube.style.top = `${y}px`;
+      }
+    }
+
+    function onMouseUp() {
+      selectedCube = null;
+    }
+
 	
 </script>
 
