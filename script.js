@@ -1,32 +1,27 @@
-// Your code here.
+  let isDragging = false;
+    let startPositionX = 0;
+    let currentTranslateX = 0;
 
-// Your code here.
-const slider = document.querySelector('.items');
-let isDown = false;
-let startX;
-let scrollLeft;
+    const cubeContainer = document.getElementById('cubeContainer');
 
-slider.addEventListener('mousedown', (e) => {
-isDown = true;
-slider.classList.add('active');
-startX = e.pageX - slider.offsetLeft;
-scrollLeft = slider.scrollLeft;
-});
+    cubeContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startPositionX = e.clientX - currentTranslateX;
+    });
 
-slider.addEventListener('mouseleave', () => {
-isDown = false;
-slider.classList.remove('active');
-});
+    cubeContainer.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const newX = e.clientX - startPositionX;
+        cubeContainer.style.transform = `translateX(${newX}px)`;
+        currentTranslateX = newX;
+      }
+    });
 
-slider.addEventListener('mouseup', () => {
-isDown = false;
-slider.classList.remove('active');
-});
+    cubeContainer.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
 
-slider.addEventListener('mousemove', (e) => {
-if (!isDown) return; // stop the fn from running
-e.preventDefault();
-const x = e.pageX - slider.offsetLeft;
-const walk = (x - startX) * 3;
-slider.scrollLeft = scrollLeft - walk;
-});
+    cubeContainer.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+     
