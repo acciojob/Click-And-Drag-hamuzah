@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="items" id="cubeContainer">
+    <div class="items">
     <div class="item item1">01</div>
     <div class="item item2">02</div>
     <div class="item item3">03</div>
@@ -36,36 +36,32 @@
 
 <script>
 //Your code goes here 
-const cubes = document.querySelectorAll('.cube');
-    let selectedCube = null;
-    let offsetX, offsetY;
+ const items = document.querySelector('.items');
+let isDown = false;
+let startX;
+let scrollLeft;
 
-    cubes.forEach(cube => {
-      cube.addEventListener('mousedown', onMouseDown);
-      cube.addEventListener('mousemove', onMouseMove);
-      cube.addEventListener('mouseup', onMouseUp);
-    });
+items.addEventListener('mousedown', (e) => {
+  isDown = true;
+  startX = e.pageX - items.offsetLeft;
+  scrollLeft = items.scrollLeft;
+});
 
-    function onMouseDown(event) {
-      selectedCube = event.target;
-      offsetX = event.clientX - selectedCube.offsetLeft;
-      offsetY = event.clientY - selectedCube.offsetTop;
-    }
+items.addEventListener('mouseleave', () => {
+  isDown = false;
+});
 
-    function onMouseMove(event) {
-      if (selectedCube) {
-        const x = event.clientX - offsetX;
-        const y = event.clientY - offsetY;
-        selectedCube.style.left = `${x}px`;
-        selectedCube.style.top = `${y}px`;
-      }
-    }
+items.addEventListener('mouseup', () => {
+  isDown = false;
+});
 
-    function onMouseUp() {
-      selectedCube = null;
-    }
-
-	
+items.addEventListener('mousemove', (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - items.offsetLeft;
+  const walk = (x - startX) * 2;
+  items.scrollLeft = scrollLeft - walk;
+});
 </script>
 
   </body>
